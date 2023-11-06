@@ -9,7 +9,8 @@ import { useRouter } from 'next/navigation';
 
 // TODO: change
 const CHECKLIST_ITEMS = [
-  "Immutable Data Integrity",
+  "High throughput data validation tied to the Ripple EVM",
+  "Immutable record of data history",
   "No user accounts or vendor agreements required"
 ];
 
@@ -18,10 +19,7 @@ const HERO_IMAGE = 'https://mloegv6p7igz.i.optimole.com/cb:c8bm~2d7d7/w:470/h:46
 
 
 const Home = () => {
-  const [loading, setLoading] = useState(false)
-  // next router
   const router = useRouter()
-  const [error, setError] = useState()
 
   return <div className='home-section'>
     <Row className='home-section'>

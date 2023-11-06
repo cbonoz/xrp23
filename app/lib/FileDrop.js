@@ -59,6 +59,7 @@ export function FileDrop({ files, setFiles }) {
         )
       );
     },
+    multiple: false, // https://stackoverflow.com/questions/61952768/how-to-use-dropzone-in-a-single-file-mode
   });
 
   const thumbs = files.map((file) => (
@@ -93,11 +94,11 @@ export function FileDrop({ files, setFiles }) {
   return (
     <section>
       <div {...getRootProps({ className: "dropzone" })}>
-        <input {...getInputProps()} />
+        <input {...getInputProps()}/>
         <p>Drag &apos;n&apos; drop some files here, or click to select files</p>
       </div>
       <br />
-      <b>{files.length === 0 ? 'Please upload at least one file' : 'Files to upload:'}</b>
+      <b>{files.length === 0 ? 'Please upload one file' : 'Uploading:'}</b>
       <aside style={thumbsContainer}>{thumbs}</aside>
     </section>
   );

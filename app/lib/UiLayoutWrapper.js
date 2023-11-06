@@ -17,11 +17,6 @@ function UiLayoutWrapper({ children }) {
     const { connect, wallet, logout } = {}
 
     const menuItems = [
-        // {
-        //     key: '/search',
-        //     label: <Link href="/search">Search listings</Link>,
-        //     href: '/search',
-        // },
         {
             key: '/create',
             label: <Link href="/create">Create new contract</Link>,
@@ -33,17 +28,6 @@ function UiLayoutWrapper({ children }) {
             href: '/about',
         },
     ]
-
-    const isAdmin = isAdminAddress(wallet?.address)
-
-    if (isAdmin) {
-        menuItems.push({
-            key: '/admin',
-            label: <Link href="/admin">Admin</Link>,
-            href: '/admin',
-        })
-    }
-
     return (
         <StyledComponentsRegistry>
             <ConfigProvider

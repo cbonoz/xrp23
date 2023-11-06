@@ -1,14 +1,20 @@
 'use client';
 
-import React from 'react';
+import React, {useMemo} from 'react';
 import { StyleProvider, createCache, extractStyle } from '@ant-design/cssinjs';
 import { useServerInsertedHTML } from 'next/navigation';
 
 const StyledComponentsRegistry = ({ children }) => {
-  const cache = React.useMemo(() => createCache(), [createCache]);
-  useServerInsertedHTML(() => (
-    <style id="antd" dangerouslySetInnerHTML={{ __html: extractStyle(cache, true) }} />
-  ));
+  
+  const cache = useMemo(() => createCache(), [createCache]);
+
+  useServerInsertedHTML(() => {
+    return (
+        <script dangerouslySetInnerHTML={{
+            __html: `</script>${extractStyle(cache)}<script>`
+        }}/>
+    )
+});
   return <StyleProvider cache={cache}>{children}</StyleProvider>;
 };
 

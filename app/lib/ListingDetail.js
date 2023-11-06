@@ -11,11 +11,11 @@ import {
     Spin,
     Input,
 } from 'antd';
-import { getExplorerUrl, getRpcError, humanError, ipfsUrl, isEmpty, } from '../util';
+import { getExplorerUrl, humanError, humanError, ipfsUrl, isEmpty, } from '../util';
 import { ACTIVE_CHAIN, APP_NAME, CHAIN_MAP, CHAIN_OPTIONS, DEFAULT_ACCESS_CONDITIONS, ENC_FILE_NAME, } from '../constants';
 import RenderObject from '../lib/RenderObject';
 
-import { assertTruth, getAssertionOutcome, getMetadata, requestAccess, settleAndGetAssertionResult, verifySismoConnectResponse } from '../util/listingContract';
+import { assertTruth, getAssertionOutcome, getMetadata, requestAccess, settleAndGetAssertionResult, verifySismoConnectResponse } from '../util/appContract';
 import { useAccount, useNetwork } from 'wagmi';
 import { useEthersSigner } from '../hooks/useEthersSigner';
 import ConnectButton from './ConnectButton';
@@ -60,7 +60,7 @@ const ListingDetail = ({ uploadId }) => {
         } catch (e) {
             console.log('error requesting access', e)
             // alert('Error requesting access: ' + humanError(e));
-            setError(getRpcError(e))
+            setError(humanError(e))
         } finally {
             try {
                 await getMetadata(signer, uploadId)
@@ -80,66 +80,10 @@ const ListingDetail = ({ uploadId }) => {
                 'assertTruth': 'Completed, please wait settle period'
             })
         } catch (e) {
-            setError(getRpcError(e))
+            setError(humanError(e))
         } finally {
             setRpcLoading(false)
         }
-    }
-
-    async function submitTransaction() {
-        if (!data) {
-            setError('Error: No data found')
-            setRpcLoading(false)
-            return
-        }
-
-        setRpcPending()
-
-        const targetAddress = data.crossChainAddress
-        const targetChain = data.crossChainId
-        const message = 'Cross chain message from ' + APP_NAME
-        let res
-        try {
-            // TODO:
-            alert('Cross chain from app UI not yet implemented. Please use Remix or another RPC platform')
-            // res = await sendCrossChainMessage(signer, uploadId, targetAddress, targetChain, message);
-            // console.log('request access', res)
-            // setResult(res)
-        } catch (e) {
-            setError(getRpcError(e))
-        } finally {
-            setRpcLoading(false)
-        }
-
-    }
-
-    async function settle() {
-        setRpcPending()
-        try {
-            const res = await settleAndGetAssertionResult(signer, uploadId);
-            console.log('get assertion', res)
-            setResult(res)
-        } catch (e) {
-            setError(getRpcError(e))
-        } finally {
-            setRpcLoading(false)
-        }
-
-    }
-
-
-    async function getAssertion() {
-        setRpcPending()
-        try {
-            const res = await getAssertionOutcome(signer, uploadId);
-            console.log('get assertion', res)
-            setResult(res)
-        } catch (e) {
-            setError(getRpcError(e))
-        } finally {
-            setRpcLoading(false)
-        }
-
     }
 
     async function getData() {

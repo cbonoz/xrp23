@@ -10,10 +10,12 @@ Witness
 
 Witness is a high throughput data validation platform built on ripple EVM where every piece of data gets a unique smart contract, URL, and verifiable audit history.
 
-
 <!-- Built for the XRP EVM 2023 hackathon
 
 Demo video:  -->
+
+
+You must ensure you have the XRP Ledger Devnet added to your metamask config, otherwise metamask may not be able to connect. Follow the guide here: https://opensource.ripple.com/docs/evm-sidechain/connect-metamask-to-xrpl-evm-sidechain/
 
 ## Inspiration
 

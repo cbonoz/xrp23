@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { Button, Input, Row, Col, Steps, Result, Divider, Checkbox, Card, Image, Tooltip, Select, Switch } from "antd";
-import { uploadUrl, ipfsUrl, getExplorerUrl, humanError, isEmpty, getRpcError, } from "../util";
+import { uploadUrl, ipfsUrl, getExplorerUrl, humanError, isEmpty, } from "../util";
 import { uploadFiles } from "../util/stor";
 import TextArea from "antd/lib/input/TextArea";
 import { EXAMPLE_ITEM, ACTIVE_CHAIN, APP_NAME,  CHAIN_MAP } from "../constants";
 import { FileDrop } from "./FileDrop";
-import { addAllowedAddress, deployContract } from "../util/listingContract";
+import {  deployContract } from "../util/appContract";
 import { useAccount, useNetwork } from "wagmi";
 import ConnectButton from "./ConnectButton";
 import { useEthersSigner } from '../hooks/useEthersSigner'
@@ -81,7 +81,7 @@ function CreateListing() {
 
     try {
       // 1) Create files/metadata to ipfs.
-      let cid = data.cid
+      let cid = data.cid || ''
       if (!data.useCid) {
         if (!isEmpty(data.files)) {
           res['fileName'] = data.files[0].name
@@ -97,7 +97,7 @@ function CreateListing() {
       // 2) deploy contract with initial metadata
       let contract;
       const activeChainId = activeChain.id
-      contract = await deployContract(signer);
+      contract = await deployContract(signer, data.name, data.description, data.hash, cid);
       // contract = {
       //   address: '0x1234'
       // }
@@ -110,15 +110,6 @@ function CreateListing() {
       const upload = { ...data } // TODO: set all fields.
       upload['address'] = contract.address;
 
-      if (data.hasAllowedAddress) {
-        try {
-          const allowedAddress = await addAllowedAddress(signer, contract.address, data.allowedAddress)
-          upload['allowedAddress'] = allowedAddress;
-        } catch (e) {
-          console.error('error adding allowed address', e)
-        }
-      }
-
       // tableland
       // try {
       //   const uploadResult = createUpload(provider.signer, upload)
@@ -130,7 +121,7 @@ function CreateListing() {
       setResult(res);
     } catch (e) {
       console.error("error creating witness request", e);
-      setError(humanError(getRpcError(e)));
+      setError(humanError(e));
     } finally {
       setLoading(false)
     }

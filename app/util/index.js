@@ -1,10 +1,5 @@
-import { IPFS_BASE_URL, ACTIVE_CHAIN, ADMIN_ADDRESS } from '../constants'
+import { IPFS_BASE_URL, ACTIVE_CHAIN, } from '../constants'
 import { ethers } from 'ethers'
-
-export function addMinutes(numOfMinutes, date = new Date()) {
-  date.setMinutes(date.getMinutes() + numOfMinutes);
-  return date;
-}
 
 export const abbreviate = s => s ? `${s.substr(0, 6)}**` : ''
 
@@ -13,10 +8,6 @@ export const formatDate = (d) => {
     d = d ? new Date(d) : new Date()
   }
   return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`
-}
-
-export const isAdminAddress = (address) => {
-  return ADMIN_ADDRESS && ADMIN_ADDRESS === address;
 }
 
 export const formatCurrency = (amount, symbol) => {
@@ -75,11 +66,17 @@ export const col = (k, render) => ({
   render,
 });
 
+export const getKeccak256 = (str) => {
+  const bytes = ethers.utils.toUtf8Bytes(str);
+  const hash = ethers.utils.keccak256(bytes);
+  return hash;
+}
+
 export const isEmpty = (r) => {
   return !r || r.length === 0
 }
 
-export const getRpcError = (error) => {
+const getError = (error) => {
   if (error?.data?.message) {
     return error.data.message;
   } else if (error?.reason) { 
@@ -90,11 +87,12 @@ export const getRpcError = (error) => {
   return error;
 };
 
-export const humanError = message => {
+export const humanError = err => {
+  let message = getError(err);
   if (message.indexOf('404') !== -1) {
-    message = 'Dataset not found. Do you have the correct url? Otherwise, try creating a new dataset.'
+    message = 'Entry not found. Do you have the correct url?';
   } else if (message.indexOf('network changed') !== -1) {
-    message = 'Network changed since page loaded, please refresh.'
+    message = 'Network changed since page loaded, please refresh.';
   }
   return message
 }
