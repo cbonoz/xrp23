@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useAccount, useConnect, useDisconnect, useNetwork, useSwitchNetwork } from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { CHAIN_MAP, ACTIVE_CHAIN } from '../constants'
+import { abbreviate, getExplorerUrl } from '@/util'
  
 function ConnectButton({size='large', buttonType = 'primary', text = 'Connect Wallet', connectOnMount=false}) {
   const { address, isConnected } = useAccount()
@@ -32,7 +33,9 @@ function ConnectButton({size='large', buttonType = 'primary', text = 'Connect Wa
   if (isConnected)
     return (
       <div>
-        Connected to: {address}
+        Connected to:&nbsp;
+        <a href={getExplorerUrl(network?.chain?.id, address)} target="_blank">{abbreviate(address)}</a>
+        {/* {address} */}
         <Button type="link" size={size} onClick={() => disconnect()}>Disconnect</Button>
       </div>
     )

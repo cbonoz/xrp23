@@ -12,9 +12,7 @@ import ConnectButton from "./ConnectButton";
 import { Theme } from "@ant-design/cssinjs";
 
 function UiLayoutWrapper({ children }) {
-
     const pathname = usePathname()
-    const { connect, wallet, logout } = {}
 
     const menuItems = [
         {

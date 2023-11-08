@@ -11,28 +11,34 @@ import {
     Spin,
     Input,
 } from 'antd';
-import { getExplorerUrl, humanError, humanError, ipfsUrl, isEmpty, } from '../util';
-import { ACTIVE_CHAIN, APP_NAME, CHAIN_MAP, CHAIN_OPTIONS, DEFAULT_ACCESS_CONDITIONS, ENC_FILE_NAME, } from '../constants';
+import { getExplorerUrl, humanError, ipfsUrl, isEmpty, } from '../util';
+import { ACTIVE_CHAIN, CHAIN_MAP, } from '../constants';
 import RenderObject from '../lib/RenderObject';
 
-import { assertTruth, getAssertionOutcome, getMetadata, requestAccess, settleAndGetAssertionResult, verifySismoConnectResponse } from '../util/appContract';
+import { assertTruth, getMetadata, requestAccess, validateVersion } from '../util/appContract';
 import { useAccount, useNetwork } from 'wagmi';
 import { useEthersSigner } from '../hooks/useEthersSigner';
 import ConnectButton from './ConnectButton';
+import { FileDrop } from './FileDrop';
+import TextArea from 'antd/es/input/TextArea';
 
 
 const ListingDetail = ({ uploadId }) => {
     const [loading, setLoading] = useState(false)
     const [rpcLoading, setRpcLoading] = useState(false)
     const [result, setResult] = useState()
+    const [uploadFiles, setUploadFiles] = useState([])
+    const [validateFiles, setValidateFiles] = useState([])
+    const [notes, setNotes] = useState("")
     const [error, setError] = useState()
     const [data, setData] = useState()
-    const [responseBytes, setResponseBytes] = useState();
     console.log('upload', uploadId)
 
     const { address } = useAccount();
     const { chain } = useNetwork();
     const signer = useEthersSigner({ chainId: chain?.id || ACTIVE_CHAIN.id })
+
+    const isOwner = data?.owner === address
 
     const breadcrumbs = [
         {
@@ -51,10 +57,12 @@ const ListingDetail = ({ uploadId }) => {
         setResult()
     }
 
-    async function accessData() {
+    async function newVersion() {
         setRpcPending()
         try {
-            const res = await requestAccess(signer, uploadId);
+            let cid = ""; // TODO: add cid.
+            const dataHash = uploadFiles[0].dataHash
+            const res = await updateVersion(signer, uploadId, cid, notes);
             console.log('request access', res)
             setResult(res)
         } catch (e) {
@@ -71,14 +79,13 @@ const ListingDetail = ({ uploadId }) => {
         }
     }
 
-    async function assert() {
+    async function validate() {
         setRpcPending()
         try {
-            const res = await assertTruth(signer, uploadId);
+            const dataHash = validateFiles[0].dataHash
+            const res = await validateVersion(signer, uploadId, dataHash);
             console.log('assert', res)
-            setResult({
-                'assertTruth': 'Completed, please wait settle period'
-            })
+            setResult(res)
         } catch (e) {
             setError(humanError(e))
         } finally {
@@ -121,14 +128,6 @@ const ListingDetail = ({ uploadId }) => {
 
     }, [error, data])
 
-    const hasAssertion = !isEmpty(data?.assertion)
-    const hasCrossChain = !isEmpty(data?.crossChainId)
-    const hasSismo = !isEmpty(data?.sismoGroup) && data?.sismoGroup != '0x00000000000000000000000000000000'
-    const hasCondition = hasAssertion || hasCrossChain || hasSismo;
-
-    const crossChainName = CHAIN_MAP[data?.crossChainId]?.name
-    const isCrossChainAddressCorrect = address === data?.crossChainAddress
-
     if (!signer) {
         return <Card title="Listing details">
             <p className='bold'>Connect your wallet to view upload page.</p>
@@ -137,22 +136,6 @@ const ListingDetail = ({ uploadId }) => {
 
         </Card>
     }
-
-    async function onResponse(bytes) {
-        console.log('onResponseBytes', bytes)
-        setResponseBytes(bytes)
-    }
-
-    const { assertSuccess, crossChain, sismo } = data?.conditions || {}
-
-    function RenderCondition({ isTrue, children }) {
-        return <span className={isTrue ? 'success-text' : ''}>
-            {children}
-            {isTrue && <span>&nbsp;✅</span>}
-        </span>
-    }
-
-    const conditionsMet = data?.cid
 
     return (
         <div className="upload-detail-page">
@@ -168,75 +151,45 @@ const ListingDetail = ({ uploadId }) => {
                     lg: 32,
 
                 }}>
-                    <Col span={14}>
-
-                        {!hasCondition && <h3>
-                            This upload does not have any access restrictions.
-                        </h3>}
-
-                        {hasCondition && <div> <h3>
-                            This upload has access restrictions. The below must be met to access the data:
-                        </h3>
-
-                            <br />
-                            <ol style={{ paddingLeft: '16px' }}>
-                                {hasAssertion && <li><RenderCondition isTrue={assertSuccess}>Assertion must be true on contract:&nbsp;<b>{data.assertion}</b></RenderCondition></li>}
-                                {hasCrossChain && <li><RenderCondition isTrue={crossChain}>A cross-chain transaction from:&nbsp;<b>{data.crossChainAddress} on {crossChainName}</b> to this contract</RenderCondition></li>}
-                                {hasSismo && <li><RenderCondition isTrue={sismo}>A Sismo Connect response with claim:&nbsp;<b>{data.sismoGroup}</b></RenderCondition></li>}
-                            </ol>
-                        </div>
-                        }
-
-                        <Divider />
-
+                    <Col span={10}>
                         {/* <p>Contract Address: {uploadId}</p> */}
-                        <RenderObject keys={['name', 'description', 'owner', 'contract', 'cid']} json={data} />
+                        <RenderObject json={data} />
                         <p>
                             <a href={getExplorerUrl(ACTIVE_CHAIN, uploadId)} target="_blank">View contract</a>
                         </p>
                         {/* {JSON.stringify(data, null, 2)} */}
                     </Col>
-                    <Col span={10}>
-                        <Card title="Actions">
-                            {!conditionsMet && <div>
-                                {hasAssertion && <div className='standard-margin'>
-                                    <h4>Assertion actions</h4>
-                                    <Button type="link" onClick={assert}>Assert Truth (step 1)</Button>
-                                    <br />
-                                    <Button type="link" onClick={getAssertion}>Check expiration (step 2)</Button>
-                                    <br />
-                                    <Button type="link" onClick={settle}>Settle and Get Assertion Result (step 3)</Button>
-                                </div>}
+                    <Col span={14}>
+
+                        {isOwner && <Card title="Owner controls">
+
+                            <FileDrop
+                                files={uploadFiles}
+                                setFiles={(files) => setUploadFiles(files)} />
 
 
-                                {hasCrossChain && <div className='standard-margin'>
-                                    <h4>Cross chain actions</h4>
-                                    {/* {!isCrossChainAddressCorrect && <p className='error-text'>Must be logged in with {data?.crossChainAddress}</p>} */}
-                                    <Input
-                                        placeholder={`Enter ${crossChainName} WitnessContract address`}
-                                    />
+                            <TextArea
+                                rows={4}
+                                placeholder="Add notes about this version"
+                                value={notes}
+                                onChange={(e) => setNotes(e.target.value)}
+                            />
 
-                                    <Button
-                                        disabled={!isCrossChainAddressCorrect}
-                                        loading={rpcLoading}
-                                        onClick={submitTransaction}
-                                    >Send transaction</Button>
+                            <Button type="primary" onClick={newVersion} loading={rpcLoading} disabled={!isOwner || rpcLoading || isEmpty(uploadFiles)}>Update version</Button>
 
 
-                                </div>}
+                        </Card>}
+                        <Card title="Validate">
 
-                                <br />
+                            <FileDrop
+                                files={validateFiles}
+                                setFiles={(files) => setValidateFiles(files)} />
+                            <Button type="dashed" onClick={validate} loading={rpcLoading} disabled={rpcLoading || isEmpty(validateFiles)}>Check existence</Button>
 
-
-                                <Button
-                                    type="primary"
-                                    size="large"
-                                    loading={rpcLoading || loading}
-                                    disabled={rpcLoading || loading} onClick={accessData}>Attempt Access</Button>
-
-                            </div>}
 
                             <br />
+                            <br />
+
                             {rpcLoading && <div>
                                 <br />
                                 <Spin size="large" />
@@ -252,6 +205,8 @@ const ListingDetail = ({ uploadId }) => {
                             {error && <p className='error-text'>Error: {error}</p>}
 
                         </Card>
+
+
                     </Col>
                 </Row>
                 {/* {JSON.stringify(data)} */}

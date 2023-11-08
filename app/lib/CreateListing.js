@@ -2,12 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { Button, Input, Row, Col, Steps, Result, Divider, Checkbox, Card, Image, Tooltip, Select, Switch } from "antd";
-import { uploadUrl, ipfsUrl, getExplorerUrl, humanError, isEmpty, } from "../util";
+import { uploadUrl, ipfsUrl, getExplorerUrl, humanError, isEmpty, bytesToSize, } from "../util";
 import { uploadFiles } from "../util/stor";
 import TextArea from "antd/lib/input/TextArea";
-import { EXAMPLE_ITEM, ACTIVE_CHAIN, APP_NAME,  CHAIN_MAP } from "../constants";
+import { EXAMPLE_ITEM, ACTIVE_CHAIN, APP_NAME, CHAIN_MAP, MAX_FILE_SIZE_BYTES } from "../constants";
 import { FileDrop } from "./FileDrop";
-import {  deployContract } from "../util/appContract";
+import { deployContract } from "../util/appContract";
 import { useAccount, useNetwork } from "wagmi";
 import ConnectButton from "./ConnectButton";
 import { useEthersSigner } from '../hooks/useEthersSigner'
@@ -41,12 +41,13 @@ function CreateListing() {
     if (!data.name || !data.description) {
       return "Please provide a name and description for the upload.";
     }
-
-    if (!data.useCid && isEmpty(data.files)) {
-      return "Must add at least one file";
-    } else if (data.useCid && isEmpty(data.cid)) {
-      return "Must provide a CID for the upload";
+    if (isEmpty(data.files)) {
+      return "Please provide a data file to track";
     }
+    if (!signer) {
+      return `Please connect a valid ${activeChain.name} wallet`;
+    }
+
 
     return undefined
   };
@@ -58,11 +59,6 @@ function CreateListing() {
 
     if (errMessage) {
       setError(errMessage)
-      return;
-    }
-
-    if (!signer) {
-      setError(`Please connect a valid ${activeChain.name} wallet`);
       return;
     }
 
@@ -81,26 +77,22 @@ function CreateListing() {
 
     try {
       // 1) Create files/metadata to ipfs.
-      let cid = data.cid || ''
-      if (!data.useCid) {
-        if (!isEmpty(data.files)) {
-          res['fileName'] = data.files[0].name
-          cid = await uploadFiles(
-            files,
-            res,
-          );
-        } else {
-          throw new Error("No files found");
-        }
+      let cid = data.cid ?? ''
+      const file = files[0]
+      res['fileName'] = file.name
+      res['dataHash'] = file.dataHash
+      if (data.shouldUpload) {
+        cid = await uploadFiles(
+          files,
+          res,
+        );
       }
 
       // 2) deploy contract with initial metadata
       let contract;
-      const activeChainId = activeChain.id
-      contract = await deployContract(signer, data.name, data.description, data.hash, cid);
-      // contract = {
-      //   address: '0x1234'
-      // }
+
+      // get hash of file bytes
+      contract = await deployContract(signer, data.name, data.description, res.dataHash, cid, "");
       res["cid"] = cid;
       res["contract"] = contract.address;
       res["uploadUrl"] = uploadUrl(contract.address || cid);
@@ -139,6 +131,18 @@ function CreateListing() {
     }
     return 0;
   };
+
+  const resultOptions = [
+    <Button type="primary" onClick={() => openTab(result?.contractUrl)} target="_blank">
+      View created contract
+    </Button>]
+
+  if (result?.cid) {
+    resultOptions.push(<Button type="dashed" onClick={() => openTab(ipfsUrl(result.cid))} target="_blank">
+      View files
+    </Button>)
+  }
+
 
   return (
     <div>
@@ -196,44 +200,30 @@ function CreateListing() {
               <br />
               <br />
 
-              {/* Checkbox for useCid */}
+              {/* Checkbox for shouldUpload */}
               <br />
               <br />
-              <h4>Is this a large dataset over 5MB or do you have a CID already?&nbsp;
+              <h4>Note: File must be under {bytesToSize(MAX_FILE_SIZE_BYTES)} for testnet.</h4>
+              <br />
+              <p className="bold">Also upload to IPFS?&nbsp;
 
                 <Checkbox
                   type="checkbox"
-                  checked={data.useCid}
-                  onChange={(e) => updateData("useCid", e.target.checked)}
+                  checked={data.shouldUpload}
+                  onChange={(e) => updateData("shouldUpload", e.target.checked)}
                 />
-              </h4>
-              <br />
+                <br />
+                <br />
+              </p>
+              <Card title="Upload data file">
 
-              {data.useCid && <>
+                {/* <h3 className="vertical-margin">Upload dataset(s) for purchaseable collection</h3> */}
+                <FileDrop
+                  files={data.files || []}
+                  setFiles={(files) => updateData("files", files)}
+                />
 
-                <Card title="Provide CID link (large file)">
-                  <br />
-                  <p>Use an existing cid or a <a href="https://lotus.filecoin.io/tutorials/lotus/large-files/" target="_blank">Lotus</a> client to upload an encrypted or unencrypted (less secure) dataset.</p>
-                  <br />
-                  <h4>Data CID</h4>
-                  <Input
-                    placeholder="Data CID"
-                    value={data.cid}
-                    onChange={(e) => updateData("cid", e.target.value)}
-                  />
-                </Card>
-              </>}
-              {!data.useCid && <>
-                <Card title="Upload secured files">
-
-                  {/* <h3 className="vertical-margin">Upload dataset(s) for purchaseable collection</h3> */}
-                  <FileDrop
-                    files={data.files || []}
-                    setFiles={(files) => updateData("files", files)}
-                  />
-
-                </Card>
-              </>}
+              </Card>
 
               {/* TODO: add configurable amount of items */}
 
@@ -267,22 +257,14 @@ function CreateListing() {
               <Result status="success"
                 title="Upload created! 🎉"
                 subTitle="Access your hosted encrypted data and shareable url below"
-                extra={[
-
-                  <Button type="primary" onClick={() => openTab(result.contractUrl)} target="_blank">
-                    View created contract
-                  </Button>,
-                  <Button type="secondary" onClick={() => openTab(ipfsUrl(result.cid))} target="_blank">
-                    View files
-                  </Button>,
-                ]}
+                extra={resultOptions}
               />
               <div>
 
                 <br />
                 <br />
                 <div>
-                  <h5>Share or post this page with potential accessors:</h5>
+                  <h5>Use this page to audit your file's history:</h5>
                   <br />
                   <a href={result.uploadUrl} target="_blank">
                     View upload page

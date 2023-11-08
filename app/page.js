@@ -9,8 +9,8 @@ import { useRouter } from 'next/navigation';
 
 // TODO: change
 const CHECKLIST_ITEMS = [
-  "High throughput data validation tied to the Ripple EVM",
-  "Immutable record of data history",
+  'Validate any piece of data against the XRP EVM',
+  "Support for high throughput and proof of ownership",
   "No user accounts or vendor agreements required"
 ];
 

@@ -48,3 +48,5 @@ export const EXAMPLE_ITEM = {
 }
 
 export const IPFS_BASE_URL = 'https://ipfs.io/ipfs'
+
+export const MAX_FILE_SIZE_BYTES = 5000000; // 5MB

@@ -5,9 +5,10 @@ contract WitnessContract {
     // Struct to represent a data entry
     struct DataEntry {
         address creator;
-        string data;
+        bytes32 dataHash;
         uint timestamp;
         string cid; // optional cid pointer to record/data.
+        string notes; // optional notes
     }
 
     // owner
@@ -26,14 +27,14 @@ contract WitnessContract {
     mapping(bytes32 => DataEntry) public dataEntries;
 
     // Event to log data entry creation
-    event DataEntryCreated(bytes32 dataHash, address creator, string data, uint timestamp);
+    event DataEntryCreated(address creator, bytes32 dataHash, uint timestamp, uint evolutionCount, string notes);
 
-    constructor(string memory _name, string memory _description, string memory _data, string memory _cid) {
+    constructor(string memory _name, string memory _description, bytes32 _dataHash, string memory _cid, string memory _notes) {
         // Constructor to initialize the contract
         owner = msg.sender;
         name = _name;
         description = _description;
-        createDataEntry(_data, _cid);
+        createVersion(_dataHash, _cid, _notes);
     }
 
     // get owner
@@ -42,26 +43,27 @@ contract WitnessContract {
     }
 
     // Function to create a new data entry
-    function createDataEntry(string memory _data, string memory _cid) public {
-        require(bytes(_data).length > 0, "Data cannot be empty");
-        // owner
+    function createVersion(bytes32 _dataHash, string memory _cid, string memory _notes) public {
+        // require owner and nonempty data hash
         require(msg.sender == owner, "Only owner can create data entry");
-        bytes32 dataHash = keccak256(abi.encodePacked(_data));
-        dataEntries[dataHash] = DataEntry(msg.sender, _data, block.timestamp, _cid);
-        emit DataEntryCreated(dataHash, msg.sender, _data, block.timestamp);
+        require(_dataHash != "", "Data hash cannot be empty");
+        // create new data entry and update evolution count
+        DataEntry memory entry = DataEntry(msg.sender, _dataHash, block.timestamp, _cid, _notes);
+        dataEntries[_dataHash] = entry;
+        emit DataEntryCreated( msg.sender, _dataHash, block.timestamp, evolutionCount, _notes);
         evolutionCount++;
     }
 
     // Function to retrieve data by its unique URL (dataHash)
-    function validateDataEntry(bytes32 _dataHash) public view returns (DataEntry memory) {
+    function validateVersion(bytes32 _dataHash) public view returns (DataEntry memory) {
         DataEntry memory entry = dataEntries[_dataHash];
         require(entry.creator != address(0), "Data entry does not exist");
         return entry;
     }
 
     // get metadata
-    function getMetadata() public view returns (string memory, string memory, uint, uint) {
-        return (name, description, evolutionCount, createdAt);
+    function getMetadata() public view returns (string memory, string memory, uint, uint, address) {
+        return (name, description, evolutionCount, createdAt, owner);
     }
 
 

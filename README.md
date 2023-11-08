@@ -8,7 +8,10 @@
 Witness
 ---
 
+Validate any piece of data against the XRP EVM with proof of ownership.
+
 Witness is a high throughput data validation platform built on ripple EVM where every piece of data gets a unique smart contract, URL, and verifiable audit history.
+
 
 <!-- Built for the XRP EVM 2023 hackathon
 
@@ -66,3 +69,5 @@ This command deploys the build site to vercel by default, feel free to edit the 
 
 
 ### Useful links
+* https://newhorizon.devpost.com/
+* https://witness-evm-sidechain.peersyst.tech/
