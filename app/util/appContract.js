@@ -40,7 +40,7 @@ export const getMetadata = async (signer, address) => {
     };
 }
 
-export const createVersion = async (signer, address, dataHash, cid, notes) => {
+export const updateVersion = async (signer, address, dataHash, cid, notes) => {
     const contract = new ethers.Contract(
         address,
         DATATRACE_CONTRACT.abi,
