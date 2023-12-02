@@ -7,3 +7,4 @@ contracts/cache
 *lock
 .DS_Store
 .env
+build

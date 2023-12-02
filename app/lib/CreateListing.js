@@ -112,7 +112,7 @@ function CreateListing() {
       // Result rendered after successful doc upload + contract creation.
       setResult(res);
     } catch (e) {
-      console.error("error creating witness request", e);
+      console.error("error creating datatrace request", e);
       setError(humanError(e));
     } finally {
       setLoading(false)
@@ -149,7 +149,7 @@ function CreateListing() {
       <Row>
         <Col span={24}>
           <div className="centered">
-            <Image src="logo.png" alt="Witness Logo" width={180} height={37} />
+            <Image src="logo.png" alt="DataTrace Logo" width={180} height={37} />
             <h3>Create new data upload</h3>
             <br />
             <br />
@@ -244,7 +244,7 @@ function CreateListing() {
                 {!address && <ConnectButton text="Connect wallet to continue" />}
 
                 {!error && !result && loading && (
-                  <span className="italic">&nbsp;Deploying a WitnessContract. Confirmation may take a few moments.</span>
+                  <span className="italic">&nbsp;Deploying a DataTraceContract. Confirmation may take a few moments.</span>
                 )}
 
               </div>
@@ -287,7 +287,7 @@ function CreateListing() {
                 description: 'Upload data and specify access conditions.'
               }, {
                 title: `Create ${APP_NAME} upload`,
-                description: <span>Deploys a <a href="https://github.com/cbonoz/online23/blob/master/contracts/contracts/WitnessContract.sol" target="_blank">WitnessContract</a> smart contract and creates an access page for the dataset</span>,
+                description: <span>Deploys a <a href="https://github.com/cbonoz/online23/blob/master/contracts/contracts/DataTraceContract.sol" target="_blank">DataTraceContract</a> smart contract and creates an access page for the dataset</span>,
               }, {
                 title: 'Share URL',
                 description: 'Share the generated access url for your data',

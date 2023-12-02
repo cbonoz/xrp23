@@ -17,7 +17,7 @@ export default function About() {
             <br />
 
             <p>
-                <Image src="logo.png" alt="Witness Logo" width={180} height={37} /><br /><br />
+                <Image src="logo.png" alt="DataTrace Logo" width={180} height={37} /><br /><br />
                 {APP_NAME} | {APP_DESC}
             </p>
 

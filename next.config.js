@@ -1,7 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    distDir: 'build',
     images: {
-        unoptimized: true, 
+        unoptimized: true,
     },
 }
 

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
-contract WitnessContract {
+contract DataTraceContract {
     // Struct to represent a data entry
     struct DataEntry {
         address creator;

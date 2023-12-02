@@ -1,6 +1,6 @@
 import { polygonMumbai, avalanche, bsc, mainnet, filecoinCalibration, avalancheFuji, scrollSepolia, polygonZkEvmTestnet } from '@wagmi/core/chains'
 
-export const APP_NAME = 'Witness'
+export const APP_NAME = 'DataTrace'
 export const APP_DESC = 'Verifiable data history on the Ripple EVM'
 
 // https://wagmi.sh/react/chains

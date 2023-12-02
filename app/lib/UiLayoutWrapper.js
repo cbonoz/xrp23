@@ -17,7 +17,7 @@ function UiLayoutWrapper({ children }) {
     const menuItems = [
         {
             key: '/create',
-            label: <Link href="/create">Create new contract</Link>,
+            label: <Link href="/create">Create an audit</Link>,
             href: '/create',
         },
         {
@@ -37,7 +37,7 @@ function UiLayoutWrapper({ children }) {
             >
                 <Layout>
                     <Header style={{ background: '#fff', display: 'flex' }}>
-                        <Image src="/logo.png" alt="Witness Logo"
+                        <Image src="/logo.png" alt="DataTrace Logo"
                             className='header-logo'
                             height={48}
                             onClick={() => {

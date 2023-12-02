@@ -1,12 +1,12 @@
 import { ethers } from "ethers";
-import { WITNESS_CONTRACT } from "./metadata";
+import { DATATRACE_CONTRACT } from "./metadata";
 import { formatDate } from ".";
 
 export async function deployContract(signer, uploadName, description, bytes, cid, notes) {
     // Deploy contract with ethers
     const factory = new ethers.ContractFactory(
-        WITNESS_CONTRACT.abi,
-        WITNESS_CONTRACT.bytecode,
+        DATATRACE_CONTRACT.abi,
+        DATATRACE_CONTRACT.bytecode,
         signer
     );
 
@@ -26,7 +26,7 @@ export async function deployContract(signer, uploadName, description, bytes, cid
 export const getMetadata = async (signer, address) => {
     const contract = new ethers.Contract(
         address,
-        WITNESS_CONTRACT.abi,
+        DATATRACE_CONTRACT.abi,
         signer
     );
     const result = await contract.getMetadata.call();
@@ -43,7 +43,7 @@ export const getMetadata = async (signer, address) => {
 export const createVersion = async (signer, address, dataHash, cid, notes) => {
     const contract = new ethers.Contract(
         address,
-        WITNESS_CONTRACT.abi,
+        DATATRACE_CONTRACT.abi,
         signer
     );
     console.log('creating version', dataHash, cid, notes)
@@ -55,7 +55,7 @@ export const createVersion = async (signer, address, dataHash, cid, notes) => {
 export const validateVersion = async (signer, address, dataHash) => {
     const contract = new ethers.Contract(
         address,
-        WITNESS_CONTRACT.abi,
+        DATATRACE_CONTRACT.abi,
         signer
     );
     console.log('validating version', dataHash)

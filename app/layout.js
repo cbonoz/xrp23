@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
     {/* <Script async src="https://saturn.tech/widget.js" /> */}
     <head>
       <link rel="icon" href="/favicon.ico" sizes="any" />
-      <title>Witness | Distributed data management and security</title>
+      <title>DataTrace | Distributed data management and security</title>
       <meta name="description" content="Distributed data management and security" />
     </head>
     <body>
