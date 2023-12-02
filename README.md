@@ -84,8 +84,8 @@ You can deploy your own version of DataTrace on the web for internal or public u
 
 #### Home
 
-Images to be added.
-<!-- TODO -->
+![Alt text](img/home.png) ![Alt text](img/verify.png) ![Alt text](img/complete.png) ![Alt text](img/confirm.png) ![Alt text](img/contract.png) ![Alt text](img/create.png)  ![Alt text](img/ipfs.png) ![Alt text](img/logo_3_2.png) ![Alt text](img/manage.png)
+
 
 
 ## Potential future work
