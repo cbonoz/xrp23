@@ -43,6 +43,15 @@ Throughout the development of DataTrace, we achieved several milestones that mak
 
 Working on DataTrace was a learning experience. We gained valuable insights into the intricacies of Ripple EVM and blockchain technology. We also deepened our understanding of data validation and its importance in today's digital ecosystem. This project has taught us the significance of innovation and adaptability when addressing complex challenges in the blockchain and data validation space.
 
+### Recompiling the DataTrace smart contract for deployment on XRP EVM
+
+This contract project uses forge foundry for builds https://book.getfoundry.sh/reference/forge/forge-build
+
+Compiling contracts:
+`yarn build`
+
+Copy contents of `.json` contract output to `metadata.js` in the app project.
+
 
 ## Running the project (from scratch)
 
@@ -58,17 +67,20 @@ Any repeated starts can be done with `yarn dev` once all environment variables a
 
 You can deploy your own version of DataTrace on the web for internal or public use.
 
-`yarn; yarn build`
+1. Follow config steps above in 'Running the project'
 
-Copy the contents of `out` to the CDN of your choosing.
+2. `yarn; yarn build`
 
-### Deployment build
-
-This command deploys the build site to vercel by default, feel free to edit the deploy command in `package.json` to your desired deployment destination.
-
-`yarn build; yarn deploy`
+3. Copy the contents of `build` to the CDN of your choosing.
 
 ### Screenshots
+
+
+#### Home
+
+Images to be added.
+<!-- TODO -->
+
 
 ## Potential future work
 1. Mainnet deployment and support: DataTrace is currently deployable on Ripple EVM testnet and is free to use - mainnet deployments would offer more long term guarantees and stability.
