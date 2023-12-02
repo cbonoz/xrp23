@@ -1,7 +1,6 @@
 // import { Web3Storage } from "web3.storage";
 import axios from 'axios'
-import { files } from 'jszip';
-import { Web3Storage } from "web3.storage/dist/bundle.esm.min.js"; // webpack 4
+import { Web3Storage } from 'web3.storage';
 
 const API_KEY = process.env.NEXT_PUBLIC_STORAGE_KEY;
 

@@ -45,6 +45,7 @@ export const EXAMPLE_ITEM = {
   "id": 1,
   "name": "Disposition of assets [Trust & Will]",
   "description": "Private instructions for how assets of the family should be shared post mortem.",
+  "shouldUpload": true,
 }
 
 export const IPFS_BASE_URL = 'https://ipfs.io/ipfs'

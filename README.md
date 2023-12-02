@@ -20,6 +20,8 @@ Demo video:  -->
 
 You must ensure you have the XRP Ledger Devnet added to your metamask config, otherwise metamask may not be able to connect. Follow the guide here: https://opensource.ripple.com/docs/evm-sidechain/connect-metamask-to-xrpl-evm-sidechain/
 
+Built for the <a href="https://newhorizon.devpost.com/" target="_blank">New Horizon hackathon</a> 2023.
+
 ## Inspiration
 
 In today's digital age, data is a crucial asset, but its integrity and validation remain challenging. DataTrace was inspired by the need for a high-throughput validation platform for data that leverages the power of Ripple EVM. We were driven by the vision of creating a secure, transparent, and accessible system where every piece of data is accompanied by a unique URL and an evolution pattern, ensuring trust and accountability in the data-driven world.

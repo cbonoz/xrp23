@@ -34,7 +34,7 @@ export const getMetadata = async (signer, address) => {
     return {
         name: result[0],
         description: result[1],
-        evolutionCount: result[2].toNumber(),
+        versionCount: result[2].toNumber(),
         createdAt: formatDate(result[3].toNumber()* 1000),
         owner: result[4],
     };
@@ -65,7 +65,8 @@ export const validateVersion = async (signer, address, dataHash) => {
         creator: result[0],
         dataHash: result[1],
         timestamp: formatDate(result[2].toNumber() * 1000),
-        cid: result[3],
-        notes: result[4],
+        version: result[3].toNumber(),
+        cid: result[4],
+        notes: result[5],
     };
 }

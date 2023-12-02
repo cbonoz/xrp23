@@ -11,6 +11,7 @@ import { deployContract } from "../util/appContract";
 import { useAccount, useNetwork } from "wagmi";
 import ConnectButton from "./ConnectButton";
 import { useEthersSigner } from '../hooks/useEthersSigner'
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 function CreateListing() {
   const { address } = useAccount()
@@ -211,10 +212,12 @@ function CreateListing() {
                   type="checkbox"
                   checked={data.shouldUpload}
                   onChange={(e) => updateData("shouldUpload", e.target.checked)}
-                />
-                <br />
-                <br />
+                />&nbsp;
+                <Tooltip className='pointer' title="If unchecked, this data snapshot can be validated, but not accessed">
+                  <InfoCircleOutlined />
+                </Tooltip>
               </p>
+                <br />
               <Card title="Upload data file">
 
                 {/* <h3 className="vertical-margin">Upload dataset(s) for purchaseable collection</h3> */}
@@ -287,7 +290,7 @@ function CreateListing() {
                 description: 'Upload data and specify access conditions.'
               }, {
                 title: `Create ${APP_NAME} upload`,
-                description: <span>Deploys a <a href="https://github.com/cbonoz/online23/blob/master/contracts/contracts/DataTraceContract.sol" target="_blank">DataTraceContract</a> smart contract and creates an access page for the dataset</span>,
+                description: <span>Deploys a <a href="https://github.com/cbonoz/xrp23/blob/main/contracts/contracts/DataTraceContract.sol" target="_blank">DataTraceContract</a> smart contract and creates an access page for the dataset</span>,
               }, {
                 title: 'Share URL',
                 description: 'Share the generated access url for your data',

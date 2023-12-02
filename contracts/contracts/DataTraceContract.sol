@@ -7,6 +7,7 @@ contract DataTraceContract {
         address creator;
         bytes32 dataHash;
         uint timestamp;
+        uint version;
         string cid; // optional cid pointer to record/data.
         string notes; // optional notes
     }
@@ -20,14 +21,14 @@ contract DataTraceContract {
     // created at
     uint public createdAt = block.timestamp;
 
-    // number of evolutions
-    uint public evolutionCount;
+    // number of versions
+    uint public versionCount = 0;
 
     // Mapping to store data entries with a unique URL
     mapping(bytes32 => DataEntry) public dataEntries;
 
     // Event to log data entry creation
-    event DataEntryCreated(address creator, bytes32 dataHash, uint timestamp, uint evolutionCount, string notes);
+    event DataEntryCreated(address creator, bytes32 dataHash, uint timestamp, uint versionCount, string notes);
 
     constructor(string memory _name, string memory _description, bytes32 _dataHash, string memory _cid, string memory _notes) {
         // Constructor to initialize the contract
@@ -47,11 +48,11 @@ contract DataTraceContract {
         // require owner and nonempty data hash
         require(msg.sender == owner, "Only owner can create data entry");
         require(_dataHash != "", "Data hash cannot be empty");
-        // create new data entry and update evolution count
-        DataEntry memory entry = DataEntry(msg.sender, _dataHash, block.timestamp, _cid, _notes);
+        // create new data entry and update version count
+        versionCount++;
+        DataEntry memory entry = DataEntry(msg.sender, _dataHash, block.timestamp, versionCount, _cid, _notes);
         dataEntries[_dataHash] = entry;
-        emit DataEntryCreated( msg.sender, _dataHash, block.timestamp, evolutionCount, _notes);
-        evolutionCount++;
+        emit DataEntryCreated( msg.sender, _dataHash, block.timestamp, versionCount, _notes);
     }
 
     // Function to retrieve data by its unique URL (dataHash)
@@ -63,7 +64,7 @@ contract DataTraceContract {
 
     // get metadata
     function getMetadata() public view returns (string memory, string memory, uint, uint, address) {
-        return (name, description, evolutionCount, createdAt, owner);
+        return (name, description, versionCount, createdAt, owner);
     }
 
 

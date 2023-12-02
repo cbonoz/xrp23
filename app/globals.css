@@ -22,7 +22,7 @@ body {
 }
 
 a {
-  color: inherit;
+  color: blue;
   text-decoration: none;
 }
 
@@ -314,7 +314,7 @@ a:hover {
 }
 
 @media print
-{    
+{
     .no-print, .no-print *
     {
         display: none !important;

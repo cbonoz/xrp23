@@ -10,6 +10,7 @@ import {
     Divider,
     Spin,
     Input,
+    Tabs,
 } from 'antd';
 import { getExplorerUrl, humanError, ipfsUrl, isEmpty, } from '../util';
 import { ACTIVE_CHAIN, CHAIN_MAP, } from '../constants';
@@ -29,6 +30,7 @@ const ListingDetail = ({ uploadId }) => {
     const [result, setResult] = useState()
     const [uploadFiles, setUploadFiles] = useState([])
     const [validateFiles, setValidateFiles] = useState([])
+    const [activeTab, setActiveTab] = useState('1')
     const [notes, setNotes] = useState("")
     const [error, setError] = useState()
     const [data, setData] = useState()
@@ -137,6 +139,41 @@ const ListingDetail = ({ uploadId }) => {
         </Card>
     }
 
+    const tabItems = [{
+        key: '1',
+        label: 'Validate',
+        children: <div>
+            <FileDrop
+                files={validateFiles}
+                setFiles={(files) => setValidateFiles(files)} />
+            <Button type="dashed" onClick={validate} loading={rpcLoading} disabled={rpcLoading || isEmpty(validateFiles)}>Check existence</Button>
+            </div>
+    }]
+
+    if (isOwner) {
+        tabItems.push({
+            key: '2',
+            label: 'Upload new version (Owner)',
+            children: <div>
+                          <FileDrop
+                                files={uploadFiles}
+                                setFiles={(files) => setUploadFiles(files)} />
+
+
+                            <TextArea
+                                rows={4}
+                                placeholder="Add notes about this version"
+                                value={notes}
+                                onChange={(e) => setNotes(e.target.value)}
+                            />
+
+                            <Button type="primary" onClick={newVersion} loading={rpcLoading} disabled={!isOwner || rpcLoading || isEmpty(uploadFiles)}>Update version</Button>
+
+                            </div>
+
+        })
+    }
+
     return (
         <div className="upload-detail-page">
             <Breadcrumb items={breadcrumbs} />
@@ -151,7 +188,7 @@ const ListingDetail = ({ uploadId }) => {
                     lg: 32,
 
                 }}>
-                    <Col span={10}>
+                    <Col span={12}>
                         {/* <p>Contract Address: {uploadId}</p> */}
                         <RenderObject json={data} />
                         <p>
@@ -159,36 +196,20 @@ const ListingDetail = ({ uploadId }) => {
                         </p>
                         {/* {JSON.stringify(data, null, 2)} */}
                     </Col>
-                    <Col span={14}>
+                    <Col span={12}>
 
-                        {isOwner && <Card title="Owner controls">
-
-                            <FileDrop
-                                files={uploadFiles}
-                                setFiles={(files) => setUploadFiles(files)} />
-
-
-                            <TextArea
-                                rows={4}
-                                placeholder="Add notes about this version"
-                                value={notes}
-                                onChange={(e) => setNotes(e.target.value)}
-                            />
-
-                            <Button type="primary" onClick={newVersion} loading={rpcLoading} disabled={!isOwner || rpcLoading || isEmpty(uploadFiles)}>Update version</Button>
-
-
-                        </Card>}
-                        <Card title="Validate">
-
-                            <FileDrop
-                                files={validateFiles}
-                                setFiles={(files) => setValidateFiles(files)} />
-                            <Button type="dashed" onClick={validate} loading={rpcLoading} disabled={rpcLoading || isEmpty(validateFiles)}>Check existence</Button>
-
-
-                            <br />
-                            <br />
+                        <div>
+                            <Tabs
+                                activeKey={activeTab}
+                                tabPosition="top"
+                                size="large"
+                                onChange={(key) => {
+                                    console.log('key', key)
+                                    setActiveTab(key)
+                                }}
+                                items={tabItems}
+                                style={{ height: 'auto' }}/>
+                        </div>
 
                             {rpcLoading && <div>
                                 <br />
@@ -203,9 +224,6 @@ const ListingDetail = ({ uploadId }) => {
                             </div>}
 
                             {error && <p className='error-text'>Error: {error}</p>}
-
-                        </Card>
-
 
                     </Col>
                 </Row>
