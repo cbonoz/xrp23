@@ -1,6 +1,6 @@
 <br/>
 <p align='center'>
-    <img src='./public/logo.png' width=400 />
+    <img src='https://i.ibb.co/8PyzJVB/logo.png' width=400 />
 </p>
 <br/>
 
@@ -81,10 +81,41 @@ You can deploy your own version of DataTrace on the web for internal or public u
 
 ### Screenshots
 
-
 #### Home
 
-![Alt text](img/home.png) ![Alt text](img/verify.png) ![Alt text](img/complete.png) ![Alt text](img/confirm.png) ![Alt text](img/contract.png) ![Alt text](img/create.png)  ![Alt text](img/ipfs.png) ![Alt text](img/logo_3_2.png) ![Alt text](img/manage.png)
+![Alt text](img/home.png)
+
+#### Creating a new DataTrace upload
+
+![Alt text](img/create.png)
+
+![Alt text](img/confirm.png)
+
+#### Each first upload deploys a unique smart contract which tracks the evolution of a piece of data
+
+![Alt text](img/complete.png)
+
+#### Smart contract with one additional version (indicated by transaction)
+
+![Alt text](img/contract.png)
+
+#### Example version uploaded on IPFS
+
+![Alt text](img/ipfs.png)
+
+
+#### Managing an existing upload (available to original uploader)
+
+
+![Alt text](img/manage.png)
+
+#### Anyone can verify a held piece of data against one of the versions to check tampering or authenticity.
+
+![Alt text](img/verify.png)
+
+---
+
+![Alt text](img/logo_3_2.png)
 
 
 
