@@ -12,11 +12,9 @@ Validate any piece of data against the XRP EVM with proof of ownership.
 
 DataTrace is a high throughput data validation platform built on Ripple EVM where every piece of data gets a unique smart contract, Filecoin URL, and verifiable audit history.
 
-
 <!-- Built for the XRP EVM 2023 hackathon
 
 Demo video:  -->
-
 
 You must ensure you have the XRP Ledger Devnet added to your metamask config, otherwise metamask may not be able to connect. Follow the guide here: https://opensource.ripple.com/docs/evm-sidechain/connect-metamask-to-xrpl-evm-sidechain/
 
@@ -30,12 +28,39 @@ Live demo url: https://xrp23.vercel.app/
 
 In today's digital age, data is a crucial asset, but its integrity and validation remain challenging. DataTrace was inspired by the need for a high-throughput validation platform for data that leverages the power of Ripple EVM. We were driven by the vision of creating a secure, transparent, and accessible system where every piece of data is accompanied by a unique URL and an evolution pattern, ensuring trust and accountability in the data-driven world.
 
-## What it does
-DataTrace is a cutting-edge data validation platform that operates on Ripple EVM. It empowers users to validate and track data with unprecedented ease and transparency. With DataTrace, users can assign a unique URL to each piece of data, creating a permanent, immutable record. The platform also tracks the data's evolution over time, ensuring its accuracy and integrity. This system enhances data trustworthiness, making it ideal for use cases like supply chain management, financial transactions, and beyond.
+## Key Features of DataTrace:
+
+DataTrace assigns a unique smart contract for each initial piece of data. This ensures that the validation process is not only decentralized but also transparent, as the smart contract acts as a tamper-proof record of the data's origin and modifications.
+
+Filecoin Integration:
+
+Every data entry on DataTrace is associated with a Filecoin URL. This integration not only facilitates secure and decentralized storage but also ensures that the data's existence and integrity can be independently verified through the Filecoin network.
+Verifiable Audit History:
+
+DataTrace maintains a comprehensive audit trail for each data entry. This verifiable history, stored on the Ripple EVM, allows users to trace the evolution of the data, providing a transparent and immutable record of any changes or validations performed.
+Proof of Ownership:
+
+The platform introduces a novel concept of proof of ownership, enabling users to validate their ownership rights over specific pieces of data. This feature adds an extra layer of security and trust to the entire data validation process.
+
+### Weaknesses in Existing Platforms Addressed by DataTrace:
+
+Centralization Risks:
+
+Many existing data validation platforms rely on centralized servers, making them vulnerable to single points of failure and potential manipulation. DataTrace, built on Ripple EVM, embraces decentralization through smart contracts, reducing the risk of data tampering and unauthorized access.
+Limited Transparency:
+
+Traditional platforms often lack transparency in data validation processes. DataTrace's integration with Ripple EVM and Filecoin ensures a transparent and auditable record of each data entry, promoting accountability and trust.
+Inadequate Proof of Ownership:
+
+Current platforms may lack robust mechanisms for users to establish and validate their ownership rights over specific data. DataTrace's innovative proof of ownership feature enhances data ownership security, reducing the chances of disputes and unauthorized usage.
+Scalability Issues:
+
+High-throughput is a critical requirement for data validation platforms, especially in today's data-driven landscape. DataTrace, leveraging the Ripple EVM, addresses scalability concerns by providing a platform capable of handling large volumes of data transactions without compromising performance.
+
 
 ## How we built it
 
-Building DataTrace was a collaborative effort that combined the power of Ripple EVM with innovative technologies. We designed and implemented smart contracts to record and verify data, ensuring it remains immutable. Additionally, we developed a user-friendly web interface that allows users to interact with DataTrace effortlessly. The project leverages decentralized storage solutions to securely store data and maintain its unique URLs and evolution patterns.
+We designed and implemented smart contracts to record and verify data, ensuring it remains immutable. Additionally, we developed a user-friendly web interface that allows users to interact with DataTrace effortlessly. The project leverages decentralized storage solutions to securely store data and maintain its unique URLs and evolution patterns.
 
 ## Challenges we ran into
 
@@ -43,7 +68,7 @@ Creating DataTrace came with its fair share of challenges. Integrating Ripple EV
 
 ## Accomplishments that we're proud of
 
-Throughout the development of DataTrace, we achieved several milestones that make us proud. We successfully integrated Ripple EVM into the platform, allowing it to benefit from Ripple's high throughput capabilities. We also designed a user-friendly interface that simplifies data validation for users of all backgrounds. Furthermore, the system's ability to generate unique URLs and evolution patterns for each data point is a significant accomplishment that enhances data trust.
+We successfully integrated Ripple EVM into the platform, allowing it to benefit from Ripple's high throughput capabilities. We also designed a user-friendly interface that simplifies data validation for users of all backgrounds. Furthermore, the system's ability to generate unique URLs and evolution patterns for each data point is a significant accomplishment that enhances data trust.
 
 ## What we learned
 
