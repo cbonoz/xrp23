@@ -1,8 +1,10 @@
 // import { Web3Storage } from "web3.storage";
 import axios from 'axios'
 import { Web3Storage } from 'web3.storage';
+import { abbreviate } from '.';
 
 const API_KEY = process.env.NEXT_PUBLIC_STORAGE_KEY;
+console.log('stor', abbreviate(API_KEY))
 
 function getAccessToken() {
   return API_KEY;
