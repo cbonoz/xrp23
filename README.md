@@ -118,11 +118,10 @@ You can deploy your own version of DataTrace on the web for internal or public u
 ![Alt text](img/logo_3_2.png)
 
 
-
 ## Potential future work
-1. Mainnet deployment and support: DataTrace is currently deployable on Ripple EVM testnet and is free to use - mainnet deployments would offer more long term guarantees and stability.
-2. Security audit and review: Ensure the highest level of data security, privacy, and resistance to potential attacks. Do repeated testing to ensure that encrypted data can only be accessed when all the conditions are met.
-3. Integration with additional blockchains: Cross chain interactions on the app require configuring source and destination addresses in the DataTrace app - more sources could be added and maintained.
+1. Mainnet deployment and support: DataTrace is currently deployable on Ripple EVM testnet and is free to use - mainnet deployments would offer more long-term guarantees and stability.
+2. Security audit and review: Ensure the highest level of data security, privacy, and resistance to potential attacks. Repeated testing ensures that encrypted data can only be accessed when all the conditions are met.
+3. Integration with additional blockchains: Cross-chain interactions on the app require configuring source and destination addresses in the DataTrace app - more sources could be added and maintained
 
 
 ### Useful links
