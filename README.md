@@ -1,6 +1,6 @@
 <br/>
 <p align='center'>
-    <img src='https://i.ibb.co/8PyzJVB/logo.png' width=400 />
+    <img src='https://i.ibb.co/QbbynxP/logo.png' width=400 />
 </p>
 <br/>
 
@@ -20,7 +20,7 @@ You must ensure you have the XRP Ledger Devnet added to your metamask config, ot
 
 Built for the <a href="https://newhorizon.devpost.com/" target="_blank">New Horizon hackathon</a> 2023.
 
-Live demo url: https://xrp23.vercel.app/
+Live demo url: https://xrp23.vercel.app/ (must be connected to XRPL EVM testnet)
 
 <!-- Demo video:  -->
 
@@ -69,6 +69,8 @@ Creating DataTrace came with its fair share of challenges. Integrating Ripple EV
 ## Accomplishments that we're proud of
 
 We successfully integrated Ripple EVM into the platform, allowing it to benefit from Ripple's high throughput capabilities. We also designed a user-friendly interface that simplifies data validation for users of all backgrounds. Furthermore, the system's ability to generate unique URLs and evolution patterns for each data point is a significant accomplishment that enhances data trust.
+
+Users of the app can take as many snapshots of they want of uploaded data.
 
 ## What we learned
 
