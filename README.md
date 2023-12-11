@@ -10,7 +10,7 @@ DataTrace
 
 Validate any piece of data against the XRP EVM with proof of ownership.
 
-DataTrace is a high throughput data validation platform built on Ripple EVM where every piece of data gets a unique smart contract, Filecoin URL, and verifiable audit history.
+DataTrace is a high throughput data validation platform built on Ripple EVM, where every piece of data gets a unique smart contract, Filecoin URL, and verifiable audit history.
 
 Built for the XRP EVM 2023 hackathon
 
@@ -18,7 +18,7 @@ Built for the XRP EVM 2023 hackathon
 
 Demo video: https://youtu.be/gMbZ5oDf3n8
 
-You must ensure you have the XRP Ledger Devnet added to your metamask config, otherwise metamask may not be able to connect. Follow the guide here: https://opensource.ripple.com/docs/evm-sidechain/connect-metamask-to-xrpl-evm-sidechain/
+You must ensure you have the XRP Ledger Devnet added to your metamask config, otherwise, metamask may not be able to connect. Follow the guide here: https://opensource.ripple.com/docs/evm-sidechain/connect-metamask-to-xrpl-evm-sidechain/
 
 Built for the <a href="https://newhorizon.devpost.com/" target="_blank">New Horizon hackathon</a> 2023.
 
@@ -34,7 +34,7 @@ In today's digital age, data is a crucial asset, but its integrity and validatio
 
 ## Key Features of DataTrace:
 
-DataTrace assigns a unique smart contract for each initial piece of data. This ensures that the validation process is not only decentralized but also transparent, as the smart contract acts as a tamper-proof record of the data's origin and modifications.
+DataTrace assigns a unique smart contract for each initial piece of data. This ensures that the validation process is decentralized and transparent, as the smart contract acts as a tamper-proof record of the data's origin and modifications.
 
 Filecoin Integration:
 
@@ -44,7 +44,7 @@ Verifiable Audit History:
 DataTrace maintains a comprehensive audit trail for each data entry. This verifiable history, stored on the Ripple EVM, allows users to trace the evolution of the data, providing a transparent and immutable record of any changes or validations performed.
 Proof of Ownership:
 
-The platform introduces a novel concept of proof of ownership, enabling users to validate their ownership rights over specific pieces of data. This feature adds an extra layer of security and trust to the entire data validation process.
+The platform introduces a novel concept of proof of ownership, enabling users to validate their ownership rights over specific pieces of data. This feature adds a layer of security and trust to the entire data validation process.
 
 ### Weaknesses in Existing Platforms Addressed by DataTrace:
 
@@ -56,10 +56,10 @@ Limited Transparency:
 Traditional platforms often lack transparency in data validation processes. DataTrace's integration with Ripple EVM and Filecoin ensures a transparent and auditable record of each data entry, promoting accountability and trust.
 Inadequate Proof of Ownership:
 
-Current platforms may lack robust mechanisms for users to establish and validate their ownership rights over specific data. DataTrace's innovative proof of ownership feature enhances data ownership security, reducing the chances of disputes and unauthorized usage.
+Current platforms may need more robust mechanisms for users to establish and validate their ownership rights over specific data. DataTrace's innovative proof of ownership feature enhances data ownership security, reducing the chances of disputes and unauthorized usage.
 Scalability Issues:
 
-High-throughput is a critical requirement for data validation platforms, especially in today's data-driven landscape. DataTrace, leveraging the Ripple EVM, addresses scalability concerns by providing a platform capable of handling large volumes of data transactions without compromising performance.
+High throughput is critical for data validation platforms, especially in today's data-driven landscape. DataTrace, leveraging the Ripple EVM, addresses scalability concerns by providing a platform capable of handling large volumes of data transactions without compromising performance.
 
 
 ## How we built it
@@ -68,17 +68,17 @@ We designed and implemented smart contracts to record and verify data, ensuring 
 
 ## Challenges we ran into
 
-Creating DataTrace came with its fair share of challenges. Integrating Ripple EVM into the project required extensive research and development to ensure seamless compatibility. Additionally, designing a system that maintains data integrity without compromising on performance was a complex task. We also had to address various security concerns and optimize the platform for high throughput, which presented its own set of challenges.
+Creating DataTrace came with its fair share of challenges. Integrating Ripple EVM into the project required extensive research and development to ensure seamless compatibility. Additionally, designing a system that maintains data integrity without compromising on performance was a complex task. We also had to address various security concerns and optimize the platform for high throughput, presenting its own challenges.
 
 ## Accomplishments that we're proud of
 
-We successfully integrated Ripple EVM into the platform, allowing it to benefit from Ripple's high throughput capabilities. We also designed a user-friendly interface that simplifies data validation for users of all backgrounds. Furthermore, the system's ability to generate unique URLs and evolution patterns for each data point is a significant accomplishment that enhances data trust.
+We successfully integrated Ripple EVM into the platform, allowing it to benefit from Ripple's high throughput capabilities. We also designed a user-friendly interface that simplifies data validation for users of all backgrounds. Furthermore, the system's ability to generate unique URLs and evolution patterns for each data point significantly enhances data trust.
 
-Users of the app can take as many snapshots of they want of uploaded data.
+App users can take as many snapshots as they want of uploaded data.
 
 ## What we learned
 
-Working on DataTrace was a learning experience. We gained valuable insights into the intricacies of Ripple EVM and blockchain technology. We also deepened our understanding of data validation and its importance in today's digital ecosystem. This project has taught us the significance of innovation and adaptability when addressing complex challenges in the blockchain and data validation space.
+Working on DataTrace was a learning experience. We gained valuable insights into the intricacies of Ripple EVM and blockchain technology. We also deepened our understanding of data validation and its importance in today's digital ecosystem. This project has taught us the significance of innovation and adaptability when addressing complex blockchain and data validation challenges.
 
 ### Recompiling the DataTrace smart contract for deployment on XRP EVM
 
