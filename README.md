@@ -12,11 +12,9 @@ Validate any piece of data against the XRP EVM with proof of ownership.
 
 DataTrace is a high throughput data validation platform built on Ripple EVM, where every piece of data gets a unique smart contract, Filecoin URL, and verifiable audit history.
 
-Built for the XRP EVM 2023 hackathon
-
 ---
 
-Demo video: https://youtu.be/gMbZ5oDf3n8
+Demo video: https://youtu.be/pE6V5XOm5Vc
 
 You must ensure you have the XRP Ledger Devnet added to your metamask config, otherwise, metamask may not be able to connect. Follow the guide here: https://opensource.ripple.com/docs/evm-sidechain/connect-metamask-to-xrpl-evm-sidechain/
 
